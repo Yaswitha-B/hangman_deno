@@ -8,3 +8,9 @@
     rgb(254, 249, 195)
   );
 }
+
+h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+}
