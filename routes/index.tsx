@@ -9,7 +9,6 @@ export default define.page(function Home(ctx) {
         <title>Hangman</title>
       </Head>
       <div>
-        <h1>HANGMAN GAME</h1>
         <Hangman />
       </div>
     </div>

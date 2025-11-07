@@ -22,10 +22,11 @@ export const handler = define.handlers({
 
     const gameState: GameState = {
         wordIdx: index,
+        hangman: "",
         wordState: "_ ".repeat(wordList[index].length).trim(),
         guessedLetters: [],
         wrongLetters: [],
-        remainingChances: 6,
+        remainingChances: 7,
         gameOver: false,
         won: false,
     };

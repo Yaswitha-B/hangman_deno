@@ -16,7 +16,7 @@ export default function Hangman() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        letter: letter.value,
+        letter: letter.value.toLowerCase(),
         gameState: gameState.value
       })
     });
@@ -28,7 +28,8 @@ export default function Hangman() {
 
   return (
     <div>
-      <h1>Hangman</h1>
+      <h1>HANGMAN</h1>
+      <pre>{gameState.value.hangman}</pre>
       <p>Word: {gameState.value.wordState}</p>
       <p>Chances: {gameState.value.remainingChances}</p>
       <p>Wrong: {gameState.value.wrongLetters.join(", ")}</p>

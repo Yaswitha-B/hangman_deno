@@ -31,14 +31,22 @@ function isLetterInWord(word: string, letter: string): boolean {
 
 function updateWordState(word: string, letter: string, currentWordState: string): string {
   let newWordState = "";
-  for (let i = 0; i < word.length; i += 2) {
+  for (let i = 0; i < word.length; i++) {
     if (word[i] === letter) {
       newWordState += letter + " ";
     } else {
-      newWordState += currentWordState[i] + " ";
+      newWordState += currentWordState[i * 2] + " ";
     }
   }
-  return newWordState.trim();
+  return newWordState;
+};
+
+function displayWord(word: string): string{
+  let answer: string = "";
+  for (let i = 0; i < word.length; i++){
+    answer += word[i] + " ";
+  }
+  return answer;
 };
 
 function calculateGameStatus(gameState: GameState): GameState {
@@ -48,6 +56,7 @@ function calculateGameStatus(gameState: GameState): GameState {
   }
   if (gameState.remainingChances === 0) {
     gameState.gameOver = true;
+    gameState.wordState = displayWord(wordList[gameState.wordIdx]);
   }
   return gameState;
 };
@@ -56,11 +65,71 @@ function updateGameState(word: string, letter: string, gameState: GameState): Ga
   
   if (isLetterInWord(word, letter)) {
     gameState.wordState = updateWordState(word, letter, gameState.wordState);
-    gameState.guessedLetters.push(letter);
+    if(!gameState.guessedLetters.includes(letter))
+      gameState.guessedLetters.push(letter);
   } else {
-    gameState.wrongLetters.push(letter);
-    gameState.remainingChances--;
+    if(!gameState.wrongLetters.includes(letter)){
+      gameState.wrongLetters.push(letter);
+      gameState.remainingChances--;
+      gameState.hangman = updateHangman(gameState.remainingChances);
+    }
   }
   gameState = calculateGameStatus(gameState);
   return gameState;
+};
+
+function updateHangman(remaining_chances: number): string {
+  const hangmanStages: string[] = [
+  `  _____
+  |     |
+  |     O
+  |    /|\\
+  |    / \\
+ _|_    (Dead)`,
+
+  `  _____
+  |     |
+  |     O
+  |    /|\\
+  |    /
+ _|_`,
+
+  `  _____
+  |     |
+  |     O
+  |    /|\\
+  |
+ _|_`,
+
+ 
+  `  _____
+  |     |
+  |     O
+  |    /|
+  |
+ _|_`,
+
+  `  _____
+  |     |
+  |     O
+  |     |
+  |
+ _|_`,
+
+  `  _____
+  |     |
+  |     O
+  |
+  |
+ _|_`,
+
+  `  _____
+  |     |
+  |
+  |
+  |
+ _|_`
+];
+;
+  return hangmanStages[remaining_chances];
 };
